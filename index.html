@@ -10,11 +10,13 @@
 <meta property="og:description" content="Friday, November 6 · The Holmead House · Doors 7pm. Bring friends, drinks and stories.">
 <meta property="og:image" content="og.jpg">
 <meta name="theme-color" content="#c37ca2">
-<link rel="preload" as="image" href="poster.png">
+<link rel="preload" as="image" href="poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Federo&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Arcane Nine by Chequered Ink (free for all use). Put ArcaneNine.ttf next to index.html. */
+  @font-face { font-family: "Arcane Nine"; src: url("ArcaneNine.ttf") format("truetype"); font-display: swap; }
   :root {
     --pink: #c37ca2;
     --orange: #f8ac14;
@@ -120,6 +122,7 @@
   .btn:disabled { opacity: .6; cursor: wait; }
   .linkish { all: unset; display: block; margin: 8px auto 0; padding: 12px 8px; min-height: 20px; text-align: center; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: .95rem; }
   .linkish:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .addr { display: inline-block; margin-top: 4px; font-family: "Arcane Nine", Federo, serif; text-transform: uppercase; letter-spacing: .08em; font-size: 1.05rem; color: var(--orange); text-underline-offset: 4px; }
   .cal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .cal-row .btn { flex: 1 1 auto; padding: 11px 12px; font-size: .88rem; }
   .error { color: #ffd27a; font-weight: 600; margin: 12px 0 0; font-size: .92rem; }
@@ -154,7 +157,7 @@
 </head>
 <body>
 <main>
-  <img class="poster" src="poster.png" width="1143" height="1600"
+  <img class="poster" src="poster.jpg" width="1143" height="1600"
        alt="Out With The Lights. Diwali party, November 6th 2026. Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape. The Holmead House. Doors 7pm.">
 
 
@@ -202,6 +205,7 @@
     <div id="done" hidden>
       <h2 id="doneTitle"></h2>
       <p class="sub" id="doneText"></p>
+      <a class="addr" id="doneAddr" target="_blank" rel="noopener" hidden>3567 Holmead Pl NW</a>
       <div class="cal-row" id="calDone"></div>
       <button class="linkish" id="editBtn" type="button">Change my RSVP</button>
     </div>
@@ -212,7 +216,7 @@
 
 <dialog id="calSheet" aria-labelledby="calTitle">
   <h2 id="calTitle">Add it to your calendar</h2>
-  <p class="sub">Friday, November 6 · doors at 7pm · The Holmead House</p>
+  <p class="sub">Friday, November 6 · doors at 7pm · 3567 Holmead Pl NW</p>
   <div class="cal-col" id="calSheetBtns"></div>
   <button class="linkish" type="button" id="calLater">Maybe later</button>
 </dialog>
@@ -228,21 +232,24 @@ const EVENT = {
   start: "2026-11-06T19:00:00-05:00",
   end:   "2026-11-07T00:00:00-05:00",
   venue: "The Holmead House",
-  address: "Washington, DC",   // add the street address so maps and calendar invites point to the door
+  address: "3567 Holmead Pl NW, Washington, DC",   // used as the calendar location and map link
   mapUrl: "",                  // optional: paste a Google Maps link to override
   description: "Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape - bring a saree if you have one. Doors at 7pm. RSVP:",
   maxPlusOnes: 4,
   // Paste your Google Apps Script web app URL here (see README). Empty = preview mode.
-  rsvpEndpoint: ""
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbzSyiWi3sjIHT_P38GZn1oDsVzC3Md_eS2LeEpbBWkH7rQdVwShpuDvUvfKQoYwBQQq2A/exec"
 };
 /* ============================================================ */
 
 const $ = (id) => document.getElementById(id);
 const startD = new Date(EVENT.start), endD = new Date(EVENT.end);
 const pageUrl = location.href.split(/[?#]/)[0];
-const where = EVENT.venue + (EVENT.address ? ", " + EVENT.address : "");
+const where = EVENT.address || EVENT.venue;
+const mapUrl = EVENT.mapUrl || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(where);
 const details = EVENT.description + " " + pageUrl;
 
+
+$("doneAddr").href = mapUrl;
 
 // ---------- calendar ----------
 const utc = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -330,12 +337,14 @@ function showDone(r) {
   const first = r.name.split(" ")[0];
   if (r.attending === "yes") {
     $("doneTitle").textContent = "See you there, " + first + "!";
-    $("doneText").textContent = "Doors at 7. Early birds get a saree drape - bring a saree if you have one. Add it to your calendar:";
+    $("doneText").textContent = "Doors at 7. Early birds get a saree drape - bring a saree if you have one.";
+    $("doneAddr").hidden = false;
     $("calDone").hidden = false;
   } else {
     $("doneTitle").textContent = "We'll miss you, " + first;
     $("doneText").textContent = "If plans change, you know where to find us.";
     $("calDone").hidden = true;
+    $("doneAddr").hidden = true;
   }
 }
 $("editBtn").onclick = () => {
