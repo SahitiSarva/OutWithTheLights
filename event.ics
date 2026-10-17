@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Out With The Lights//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Out With The Lights
+BEGIN:VEVENT
+UID:20261107T000000Z-outwiththelights
+DTSTAMP:20261017T000000Z
+DTSTART:20261107T000000Z
+DTEND:20261107T050000Z
+SUMMARY:Out With The Lights · Diwali Party
+DESCRIPTION:Diwali party! Bring friends\, drinks and stories. Desi snacks w
+ ill be provided. Early birds get a saree drape - bring a saree if you have
+  one. Doors at 7pm.
+LOCATION:The Holmead House\, Washington\, DC
+BEGIN:VALARM
+TRIGGER:-PT3H
+ACTION:DISPLAY
+DESCRIPTION:Out With The Lights · Diwali Party
+END:VALARM
+END:VEVENT
+END:VCALENDAR

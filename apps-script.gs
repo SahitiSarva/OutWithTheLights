@@ -14,7 +14,7 @@ const EVENT = {
   start: '2026-11-06T19:00:00-05:00',
   end:   '2026-11-07T00:00:00-05:00',
   location: 'The Holmead House, Washington, DC',
-  description: 'Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape. Doors at 7pm. RSVP: https://your-domain.com',
+  description: 'Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape - bring a saree if you have one. Doors at 7pm. RSVP: https://outwiththelights.sahiti-sarva.workers.dev/',
 };
 const CALENDAR_ID = 'primary';
 // --------------------------------------------------------------------------

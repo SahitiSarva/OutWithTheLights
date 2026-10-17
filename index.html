@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
 <title>Out With The Lights · Diwali Party</title>
 <meta name="description" content="Diwali party · Friday, November 6 · The Holmead House · Doors 7pm. RSVP here.">
 <meta property="og:title" content="Out With The Lights · Diwali Party">
@@ -14,6 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Federo&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Arcane Nine by Chequered Ink (free for all use). Put ArcaneNine.ttf next to index.html. */
+  @font-face { font-family: "Arcane Nine"; src: url("ArcaneNine.ttf") format("truetype"); font-display: swap; }
   :root {
     --pink: #c37ca2;
     --orange: #f8ac14;
@@ -24,6 +27,9 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+  button, a { touch-action: manipulation; }
   body {
     min-height: 100vh; color: var(--white);
     font: 17px/1.5 "Josefin Sans", system-ui, sans-serif;
@@ -33,13 +39,18 @@
       radial-gradient(50% 45% at 90% 30%, rgba(194,100,200,.55), transparent 70%),
       radial-gradient(55% 40% at 10% 85%, rgba(142,98,208,.35), transparent 70%),
       radial-gradient(60% 45% at 85% 95%, rgba(212,135,143,.7), transparent 70%);
-    background-attachment: fixed;
   }
+  /* fixed backgrounds jank on phones, so only use them on desktop */
+  @media (hover: hover) and (min-width: 700px) { body { background-attachment: fixed; } }
   body::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .32; mix-blend-mode: multiply;
+    content: ""; position: fixed; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; z-index: 0; opacity: .32; mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .3 0 0 0 0 .6 0 0 0 1.2 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  main { position: relative; z-index: 1; width: min(560px, 100%); margin: 0 auto; padding: 24px 16px 56px; }
+  main {
+    position: relative; z-index: 1; width: 100%; max-width: 560px; margin: 0 auto;
+    padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(56px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  @media (max-width: 380px) { main { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); } }
 
   /* ---------- Poster ---------- */
   .poster {
@@ -48,9 +59,9 @@
   }
 
   /* ---------- Join list (above the yes / no bars) ---------- */
-  .guests { margin-top: 22px; display: flex; align-items: baseline; gap: 12px; text-align: left; font-family: Federo, serif; text-transform: uppercase; }
+  .guests { margin-top: 22px; display: flex; min-width: 0; align-items: baseline; gap: 12px; text-align: left; font-family: "Arcane Nine", Federo, serif; text-transform: uppercase; }
   .guests h2 { flex: none; font-weight: 400; font-size: .8rem; letter-spacing: .16em; margin: 0; opacity: .85; }
-  .guest-list { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 4px 12px; font-size: .8rem; letter-spacing: .05em; line-height: 1.4; }
+  .guest-list { min-width: 0; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 4px 12px; font-size: .8rem; letter-spacing: .05em; line-height: 1.4; }
   .guest-list .g { white-space: nowrap; }
   .guest-list .g small { font-size: .85em; opacity: .75; margin-left: .15em; }
   .guest-list .g.me { animation: pop .9s cubic-bezier(.3,1.6,.5,1); }
@@ -58,34 +69,35 @@
   @keyframes pop { 0% { transform: scale(.4); opacity: 0; color: var(--orange); } 60% { color: var(--orange); } }
 
   /* ---------- The two bars, side by side ---------- */
-  .bars { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
-  .bar-wrap { position: relative; display: flex; }
+  .bars { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: stretch; }
+  .bar-wrap { position: relative; display: flex; min-width: 0; }
   .bar {
-    position: relative; z-index: 2; flex: 1;
-    font-family: Federo, serif; font-size: clamp(.95rem, 3.7vw, 1.2rem); letter-spacing: .07em; text-transform: uppercase; line-height: 1.25;
-    padding: 18px 12px; border-radius: 4px; cursor: pointer; text-align: center; min-height: 96px;
+    position: relative; z-index: 2; flex: 1; min-width: 0; overflow: hidden;
+    font-family: "Arcane Nine", Federo, serif; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; line-height: 1.25; white-space: nowrap;
+    padding: 10px 8px; border-radius: 4px; cursor: pointer; text-align: center; min-height: 52px;
     border: 0; transition: transform .15s, opacity .3s, background .3s;
   }
+  .bar.wrap { white-space: normal; }
   .bar:active { transform: translateY(2px); }
   .bar:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
-  .bar.yes { background: var(--orange); color: var(--ink); box-shadow: 0 6px 0 #c4820a; }
-  .bar.no  { background: var(--night); color: var(--white); box-shadow: 0 6px 0 #170c30; }
+  .bar.yes { background: var(--orange); color: var(--ink); box-shadow: 0 4px 0 #c4820a; }
+  .bar.no  { background: var(--night); color: var(--white); box-shadow: 0 4px 0 #170c30; }
   .bar.yes:hover { background: #ffbb2e; }
   .bar.no:hover { background: #3a2468; }
   body.mode-yes .bar.no { opacity: .55; }
   body.mode-no .bar.yes { animation: beckon 1.2s ease-in-out infinite; }
-  @keyframes beckon { 50% { box-shadow: 0 6px 0 #c4820a, 0 0 0 7px rgba(248,172,20,.4); } }
+  @keyframes beckon { 50% { box-shadow: 0 4px 0 #c4820a, 0 0 0 6px rgba(248,172,20,.4); } }
 
 
   /* ---------- RSVP panel ---------- */
   .panel {
-    margin-top: 30px; padding: 22px 20px; border-radius: 6px;
-    background: rgba(45,27,85,.85); backdrop-filter: blur(4px);
+    margin-top: 30px; padding: 22px 20px; scroll-margin-top: 16px; border-radius: 6px;
+    background: rgba(45,27,85,.9); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
     box-shadow: 0 20px 50px -20px rgba(43,22,80,.6);
   }
   .panel.enter { animation: rise .45s cubic-bezier(.3,1.3,.5,1); }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
-  .panel h2, dialog h2 { font-family: Federo, serif; font-weight: 400; text-transform: uppercase; letter-spacing: .06em; font-size: 1.35rem; margin: 0 0 4px; color: var(--orange); }
+  .panel h2, dialog h2 { font-family: "Arcane Nine", Federo, serif; font-weight: 400; text-transform: uppercase; letter-spacing: .06em; font-size: 1.35rem; margin: 0 0 4px; color: var(--orange); }
   .sub { margin: 0 0 6px; opacity: .88; font-size: .95rem; }
   label { display: block; font-weight: 600; font-size: .9rem; margin: 16px 0 6px; letter-spacing: .02em; }
   label .opt { font-weight: 400; opacity: .7; }
@@ -101,32 +113,38 @@
   .stepper output { min-width: 36px; text-align: center; font-weight: 700; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
-    font-family: Federo, serif; text-transform: uppercase; letter-spacing: .08em; font-size: 1rem;
+    font-family: "Arcane Nine", Federo, serif; text-transform: uppercase; letter-spacing: .08em; font-size: 1rem;
     border-radius: 4px; padding: 13px 18px; border: 2px solid var(--white); background: transparent; color: var(--white);
     text-decoration: none; cursor: pointer;
   }
   .btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
   .btn.primary { width: 100%; margin-top: 22px; background: var(--orange); border-color: var(--orange); color: var(--ink); font-size: 1.1rem; }
   .btn:disabled { opacity: .6; cursor: wait; }
-  .linkish { all: unset; display: block; margin: 16px auto 0; text-align: center; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: .95rem; }
+  .linkish { all: unset; display: block; margin: 8px auto 0; padding: 12px 8px; min-height: 20px; text-align: center; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: .95rem; }
   .linkish:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
   .cal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .cal-row .btn { flex: 1 1 auto; padding: 11px 12px; font-size: .88rem; }
   .error { color: #ffd27a; font-weight: 600; margin: 12px 0 0; font-size: .92rem; }
-  .demo { font-size: .8rem; opacity: .7; margin: 14px 0 0; text-align: center; }
 
   /* calendar chooser that pops up after a yes */
   dialog {
-    border: 0; padding: 24px 20px 20px; width: min(440px, calc(100% - 24px)); border-radius: 10px;
+    border: 0; padding: 24px 20px 20px; width: calc(100% - 24px); max-width: 440px; max-height: 90vh; overflow-y: auto; border-radius: 10px;
     background: var(--night); color: var(--white); box-shadow: 0 30px 80px -20px rgba(20,8,40,.7);
   }
-  dialog::backdrop { background: rgba(43,22,80,.55); backdrop-filter: blur(2px); }
+  dialog::backdrop { background: rgba(43,22,80,.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+  dialog:not([open]) { display: none; }
+  /* for older browsers without <dialog> support */
+  body.sheet-open dialog { position: fixed; z-index: 50; left: 0; right: 0; top: 50%; transform: translateY(-50%); margin: 0 auto; }
+  body.sheet-open::after { content: ""; position: fixed; z-index: 40; top: 0; right: 0; bottom: 0; left: 0; background: rgba(43,22,80,.55); }
   dialog[open] { animation: rise .4s cubic-bezier(.3,1.3,.5,1); }
   dialog .cal-col { display: grid; gap: 10px; margin-top: 18px; }
   dialog .cal-col .btn { width: 100%; padding: 15px; }
   dialog .cal-col .btn.first { background: var(--orange); border-color: var(--orange); color: var(--ink); }
   @media (max-width: 520px) {
-    dialog { margin: auto auto 0; width: 100%; max-width: 100%; border-radius: 14px 14px 0 0; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+    dialog { margin: auto auto 0; width: 100%; max-width: 100%; border-radius: 14px 14px 0 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+    body.sheet-open dialog { top: auto; bottom: 0; transform: none; }
+    .panel { padding: 20px 16px; }
+    .panel h2, dialog h2 { font-size: 1.2rem; }
   }
 
   [hidden] { display: none !important; }
@@ -181,7 +199,6 @@
       <button class="btn primary" type="submit" id="submitBtn"></button>
       <p class="error" id="error" role="alert" hidden></p>
       <button class="linkish" type="button" id="changeMind" hidden>Actually, I'm coming</button>
-      <p class="demo" id="demoNote" hidden>Preview mode: RSVPs aren't saved until the Google Sheet is connected.</p>
     </form>
 
     <div id="done" hidden>
@@ -215,7 +232,7 @@ const EVENT = {
   venue: "The Holmead House",
   address: "Washington, DC",   // add the street address so maps and calendar invites point to the door
   mapUrl: "",                  // optional: paste a Google Maps link to override
-  description: "Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape. Doors at 7pm. RSVP:",
+  description: "Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape - bring a saree if you have one. Doors at 7pm. RSVP:",
   maxPlusOnes: 4,
   // Paste your Google Apps Script web app URL here (see README). Empty = preview mode.
   rsvpEndpoint: ""
@@ -228,7 +245,6 @@ const pageUrl = location.href.split(/[?#]/)[0];
 const where = EVENT.venue + (EVENT.address ? ", " + EVENT.address : "");
 const details = EVENT.description + " " + pageUrl;
 
-if (!EVENT.rsvpEndpoint) $("demoNote").hidden = false;
 
 // ---------- calendar ----------
 const utc = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -238,37 +254,37 @@ const outlookUrl = "https://outlook.live.com/calendar/0/deeplink/compose?path=/c
   encodeURIComponent(EVENT.title) + "&startdt=" + encodeURIComponent(startD.toISOString()) + "&enddt=" + encodeURIComponent(endD.toISOString()) +
   "&body=" + encodeURIComponent(details) + "&location=" + encodeURIComponent(where);
 const icsEsc = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
-function downloadIcs() {
-  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Out With The Lights//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
-    "UID:" + utc(startD) + "-outwiththelights@" + (location.hostname || "rsvp"), "DTSTAMP:" + utc(new Date()),
-    "DTSTART:" + utc(startD), "DTEND:" + utc(endD), "SUMMARY:" + icsEsc(EVENT.title), "DESCRIPTION:" + icsEsc(details),
-    "LOCATION:" + icsEsc(where), "URL:" + pageUrl,
-    "BEGIN:VALARM","TRIGGER:-PT3H","ACTION:DISPLAY","DESCRIPTION:" + icsEsc(EVENT.title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-  a.download = "out-with-the-lights.ics";
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
+// Apple Calendar uses event.ics, a real file hosted with the page: iPhones open it straight
+// into "Add to Calendar", which in-page downloads can't do reliably. Keep it in sync with EVENT.
 // Put the most likely calendar first: Apple on iPhone/Mac, Google elsewhere
 const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
-const calOptions = [["Google Calendar", googleUrl], ["Apple Calendar", null], ["Outlook", outlookUrl]];
+const calOptions = [["Google Calendar", googleUrl], [isApple ? "Apple Calendar" : "Apple / iCal", "event.ics"], ["Outlook", outlookUrl]];
 if (isApple) calOptions.unshift(calOptions.splice(1, 1)[0]);
 function calButtons(el, onPick) {
   el.innerHTML = "";
   calOptions.forEach(([label, href], i) => {
     const a = document.createElement("a"); a.className = "btn" + (i === 0 ? " first" : ""); a.textContent = label;
-    if (href) { a.href = href; a.target = "_blank"; a.rel = "noopener"; }
-    else { a.href = "#"; a.addEventListener("click", (e) => { e.preventDefault(); downloadIcs(); }); }
+    a.href = href;
+    if (href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; }   // the .ics opens in place so iOS hands it to Calendar
     if (onPick) a.addEventListener("click", onPick);
     el.appendChild(a);
   });
 }
 const sheet = $("calSheet");
 calButtons($("calDone"));
-calButtons($("calSheetBtns"), () => setTimeout(() => sheet.close(), 150));
-$("calLater").onclick = () => sheet.close();
-sheet.addEventListener("click", (e) => { if (e.target === sheet) sheet.close(); });
+// <dialog> with a fallback for older phones that don't support it
+function openSheet() {
+  if (typeof sheet.showModal === "function") sheet.showModal();
+  else { sheet.setAttribute("open", ""); document.body.classList.add("sheet-open"); }
+}
+function closeSheet() {
+  if (typeof sheet.close === "function") sheet.close();
+  else { sheet.removeAttribute("open"); document.body.classList.remove("sheet-open"); }
+}
+calButtons($("calSheetBtns"), () => setTimeout(closeSheet, 150));
+$("calLater").onclick = closeSheet;
+sheet.addEventListener("click", (e) => { if (e.target === sheet) closeSheet(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && document.body.classList.contains("sheet-open")) closeSheet(); });
 
 
 // ---------- yes / no ----------
@@ -291,7 +307,10 @@ function showForm() {
   const p = $("formPanel");
   $("rsvpForm").hidden = false; $("done").hidden = true; $("error").hidden = true;
   if (p.hidden) { p.hidden = false; p.classList.remove("enter"); void p.offsetWidth; p.classList.add("enter"); }
-  if (mode === "yes") setTimeout(() => $("name").focus({ preventScroll: true }), 350);
+  const touch = window.matchMedia && matchMedia("(hover: none)").matches;
+  // on phones, bring the form into view instead of popping the keyboard over it
+  if (touch) setTimeout(() => p.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+  else if (mode === "yes") setTimeout(() => $("name").focus({ preventScroll: true }), 350);
 }
 $("yesBar").onclick = () => setMode("yes");
 $("noBar").onclick = () => setMode("no");
@@ -313,7 +332,7 @@ function showDone(r) {
   const first = r.name.split(" ")[0];
   if (r.attending === "yes") {
     $("doneTitle").textContent = "See you there, " + first + "!";
-    $("doneText").textContent = "Doors at 7. Early birds get a saree drape. Add it to your calendar:";
+    $("doneText").textContent = "Doors at 7. Early birds get a saree drape - bring a saree if you have one. Add it to your calendar:";
     $("calDone").hidden = false;
   } else {
     $("doneTitle").textContent = "We'll miss you, " + first;
@@ -353,7 +372,7 @@ $("rsvpForm").addEventListener("submit", async (e) => {
     renderGuests(true);
     if (data.attending === "yes") {
       $("guestList").scrollIntoView({ behavior: "smooth", block: "center" });
-      setTimeout(() => sheet.showModal(), 700);   // pop up the calendar options
+      setTimeout(openSheet, 700);   // pop up the calendar options
     }
     loadGuests();
   } catch {
@@ -390,6 +409,20 @@ async function loadGuests() {
     renderGuests();
   } catch {}
 }
+
+// ---------- keep both bar labels on one line ----------
+function fitBars() {
+  const bars = [$("yesBar"), $("noBar")], no = $("noBar");
+  const overflow = () => no.scrollWidth > no.clientWidth;
+  let px = 13;  // try one line first, shrinking only a little
+  bars.forEach((b) => { b.classList.remove("wrap"); b.style.fontSize = px + "px"; });
+  while (overflow() && px > 11) { px -= .5; bars.forEach((b) => (b.style.fontSize = px + "px")); }
+  // phones: two lines at a readable size beat one line of tiny text
+  if (overflow()) bars.forEach((b) => { b.classList.add("wrap"); b.style.fontSize = "12px"; });
+}
+fitBars();
+addEventListener("resize", fitBars);
+document.fonts?.ready.then(fitBars);
 
 // returning visitor
 const prior = store.get();

@@ -7,6 +7,8 @@ Three files:
 | `index.html` | The webpage (event details, RSVP form, add‑to‑calendar, guest list) |
 | `apps-script.gs` | Free backend that saves RSVPs to a Google Sheet and emails calendar invites |
 | `poster.jpg` | The poster shown at the top of the page |
+| `ArcaneNine.ttf` | The Arcane Nine font (download it yourself, see below) |
+| `event.ics` | The calendar file iPhones open for "Apple Calendar" (update it if the date or place changes) |
 | `og.jpg` | Preview image when the link is shared in iMessage, WhatsApp, etc. |
 | `CNAME` | Tells GitHub Pages your custom domain |
 
@@ -48,7 +50,7 @@ Without this step, guests can still add the event themselves with the Google, Ap
 ## 3. Publish on GitHub Pages
 
 1. Create a GitHub account if you don't have one, then make a **new public repository** (for example `birthday`).
-2. Click **Add file → Upload files** and upload `index.html`, `poster.jpg`, `og.jpg` and `CNAME`. Don't upload `apps-script.gs`; it isn't needed on the site.
+2. Click **Add file → Upload files** and upload `index.html`, `poster.jpg`, `og.jpg`, `event.ics` and `ArcaneNine.ttf` (plus `CNAME` only if you're using a custom domain). Don't upload `apps-script.gs`; it isn't needed on the site.
 3. Go to **Settings → Pages**. Under **Source**, choose **Deploy from a branch**, pick `main` and `/ (root)`, and click **Save**.
 
 After about a minute, the site is live at `https://YOUR-USERNAME.github.io/birthday/`.
@@ -69,6 +71,8 @@ If you use Cloudflare, set the record to **DNS only** (grey cloud) until HTTPS i
 ---
 
 ## Good to know
+
+- **Font:** download Arcane Nine (free for all use, by Chequered Ink) from https://www.fontspace.com/arcane-nine-font-f70997, rename the .ttf to `ArcaneNine.ttf`, and upload it with the other files. Until it's there, the page falls back to Federo.
 
 - **Guest list privacy:** the page shows the names of everyone who said yes. To hide it, set `showGuestList: false` in `index.html` and `SHOW_GUEST_LIST = false` in the script. Emails and notes are never shown publicly.
 - **Changed RSVPs:** if someone RSVPs twice, their latest answer counts.
