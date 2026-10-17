@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Out With The Lights · Diwali Party</title>
+<meta name="description" content="Diwali party · Friday, November 6 · The Holmead House · Doors 7pm. RSVP here.">
+<meta property="og:title" content="Out With The Lights · Diwali Party">
+<meta property="og:description" content="Friday, November 6 · The Holmead House · Doors 7pm. Bring friends, drinks and stories.">
+<meta property="og:image" content="og.jpg">
+<meta name="theme-color" content="#c37ca2">
+<link rel="preload" as="image" href="poster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Federo&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #c37ca2;
+    --orange: #f8ac14;
+    --ink: #2b1650;
+    --night: #2d1b55;
+    --white: #fff8f2;
+    --shadow: 0 .25cqw .7cqw rgba(70, 25, 100, .45);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; color: var(--white);
+    font: 17px/1.5 "Josefin Sans", system-ui, sans-serif;
+    background-color: var(--pink);
+    background-image:
+      radial-gradient(60% 40% at 15% 10%, rgba(212,135,143,.75), transparent 70%),
+      radial-gradient(50% 45% at 90% 30%, rgba(194,100,200,.55), transparent 70%),
+      radial-gradient(55% 40% at 10% 85%, rgba(142,98,208,.35), transparent 70%),
+      radial-gradient(60% 45% at 85% 95%, rgba(212,135,143,.7), transparent 70%);
+    background-attachment: fixed;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .32; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .3 0 0 0 0 .6 0 0 0 1.2 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  main { position: relative; z-index: 1; width: min(560px, 100%); margin: 0 auto; padding: 24px 16px 56px; }
+
+  /* ---------- Poster ---------- */
+  .poster {
+    display: block; width: 100%; height: auto; aspect-ratio: 1143 / 1600; border-radius: 6px;
+    box-shadow: 0 2px 0 rgba(43,22,80,.15), 0 24px 60px -18px rgba(43,22,80,.55);
+  }
+
+  /* ---------- Join list (above the yes / no bars) ---------- */
+  .guests { margin-top: 22px; display: flex; align-items: baseline; gap: 12px; text-align: left; font-family: Federo, serif; text-transform: uppercase; }
+  .guests h2 { flex: none; font-weight: 400; font-size: .8rem; letter-spacing: .16em; margin: 0; opacity: .85; }
+  .guest-list { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 4px 12px; font-size: .8rem; letter-spacing: .05em; line-height: 1.4; }
+  .guest-list .g { white-space: nowrap; }
+  .guest-list .g small { font-size: .85em; opacity: .75; margin-left: .15em; }
+  .guest-list .g.me { animation: pop .9s cubic-bezier(.3,1.6,.5,1); }
+  .guest-list .empty { opacity: .75; text-transform: none; font-family: "Josefin Sans", sans-serif; }
+  @keyframes pop { 0% { transform: scale(.4); opacity: 0; color: var(--orange); } 60% { color: var(--orange); } }
+
+  /* ---------- The two bars, side by side ---------- */
+  .bars { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+  .bar-wrap { position: relative; display: flex; }
+  .bar {
+    position: relative; z-index: 2; flex: 1;
+    font-family: Federo, serif; font-size: clamp(.95rem, 3.7vw, 1.2rem); letter-spacing: .07em; text-transform: uppercase; line-height: 1.25;
+    padding: 18px 12px; border-radius: 4px; cursor: pointer; text-align: center; min-height: 96px;
+    border: 0; transition: transform .15s, opacity .3s, background .3s;
+  }
+  .bar:active { transform: translateY(2px); }
+  .bar:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+  .bar.yes { background: var(--orange); color: var(--ink); box-shadow: 0 6px 0 #c4820a; }
+  .bar.no  { background: var(--night); color: var(--white); box-shadow: 0 6px 0 #170c30; }
+  .bar.yes:hover { background: #ffbb2e; }
+  .bar.no:hover { background: #3a2468; }
+  body.mode-yes .bar.no { opacity: .55; }
+  body.mode-no .bar.yes { animation: beckon 1.2s ease-in-out infinite; }
+  @keyframes beckon { 50% { box-shadow: 0 6px 0 #c4820a, 0 0 0 7px rgba(248,172,20,.4); } }
+
+
+  /* ---------- RSVP panel ---------- */
+  .panel {
+    margin-top: 30px; padding: 22px 20px; border-radius: 6px;
+    background: rgba(45,27,85,.85); backdrop-filter: blur(4px);
+    box-shadow: 0 20px 50px -20px rgba(43,22,80,.6);
+  }
+  .panel.enter { animation: rise .45s cubic-bezier(.3,1.3,.5,1); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  .panel h2, dialog h2 { font-family: Federo, serif; font-weight: 400; text-transform: uppercase; letter-spacing: .06em; font-size: 1.35rem; margin: 0 0 4px; color: var(--orange); }
+  .sub { margin: 0 0 6px; opacity: .88; font-size: .95rem; }
+  label { display: block; font-weight: 600; font-size: .9rem; margin: 16px 0 6px; letter-spacing: .02em; }
+  label .opt { font-weight: 400; opacity: .7; }
+  input[type=text], textarea {
+    width: 100%; font: inherit; font-size: 1rem; color: var(--ink); background: var(--white);
+    border: 2px solid transparent; border-radius: 4px; padding: 11px 13px;
+  }
+  textarea { resize: vertical; min-height: 72px; }
+  input:focus, textarea:focus { outline: none; border-color: var(--orange); }
+  .stepper { display: inline-flex; align-items: center; background: var(--white); border-radius: 4px; overflow: hidden; color: var(--ink); }
+  .stepper button { width: 44px; height: 44px; border: 0; background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; }
+  .stepper button:focus-visible { outline: 2px solid var(--orange); outline-offset: -2px; }
+  .stepper output { min-width: 36px; text-align: center; font-weight: 700; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: Federo, serif; text-transform: uppercase; letter-spacing: .08em; font-size: 1rem;
+    border-radius: 4px; padding: 13px 18px; border: 2px solid var(--white); background: transparent; color: var(--white);
+    text-decoration: none; cursor: pointer;
+  }
+  .btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+  .btn.primary { width: 100%; margin-top: 22px; background: var(--orange); border-color: var(--orange); color: var(--ink); font-size: 1.1rem; }
+  .btn:disabled { opacity: .6; cursor: wait; }
+  .linkish { all: unset; display: block; margin: 16px auto 0; text-align: center; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: .95rem; }
+  .linkish:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .cal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .cal-row .btn { flex: 1 1 auto; padding: 11px 12px; font-size: .88rem; }
+  .error { color: #ffd27a; font-weight: 600; margin: 12px 0 0; font-size: .92rem; }
+  .demo { font-size: .8rem; opacity: .7; margin: 14px 0 0; text-align: center; }
+
+  /* calendar chooser that pops up after a yes */
+  dialog {
+    border: 0; padding: 24px 20px 20px; width: min(440px, calc(100% - 24px)); border-radius: 10px;
+    background: var(--night); color: var(--white); box-shadow: 0 30px 80px -20px rgba(20,8,40,.7);
+  }
+  dialog::backdrop { background: rgba(43,22,80,.55); backdrop-filter: blur(2px); }
+  dialog[open] { animation: rise .4s cubic-bezier(.3,1.3,.5,1); }
+  dialog .cal-col { display: grid; gap: 10px; margin-top: 18px; }
+  dialog .cal-col .btn { width: 100%; padding: 15px; }
+  dialog .cal-col .btn.first { background: var(--orange); border-color: var(--orange); color: var(--ink); }
+  @media (max-width: 520px) {
+    dialog { margin: auto auto 0; width: 100%; max-width: 100%; border-radius: 14px 14px 0 0; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <img class="poster" src="poster.png" width="1143" height="1600"
+       alt="Out With The Lights. Diwali party, November 6th 2026. Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape. The Holmead House. Doors 7pm.">
+
+
+  <section class="guests" aria-live="polite">
+    <h2>Join</h2>
+    <div class="guest-list" id="guestList"><span class="empty">Be the first to say yes</span></div>
+  </section>
+
+  <div class="bars" role="group" aria-label="Are you coming?">
+    <div class="bar-wrap yes-wrap">
+      <button class="bar yes" id="yesBar" type="button" aria-pressed="false">Yes, I'm coming</button>
+    </div>
+    <div class="bar-wrap no-wrap">
+      <button class="bar no" id="noBar" type="button" aria-pressed="false">No, I'm living the busy DC life</button>
+    </div>
+  </div>
+
+  <section class="panel" id="formPanel" hidden>
+    <form id="rsvpForm" novalidate>
+      <h2 id="formTitle"></h2>
+      <p class="sub" id="formSub"></p>
+
+      <label for="name">Your name</label>
+      <input type="text" id="name" autocomplete="name" maxlength="60" required>
+
+      <div id="yesOnly">
+        <label>Bringing friends?</label>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="Fewer friends">−</button>
+          <output id="plusOnes" aria-live="polite">0</output>
+          <button type="button" id="plus" aria-label="More friends">+</button>
+        </div>
+      </div>
+
+      <div id="noOnly">
+        <label for="note">Leave a message <span class="opt">(optional)</span></label>
+        <textarea id="note" maxlength="500" placeholder="Excuses or gossip only"></textarea>
+      </div>
+
+      <button class="btn primary" type="submit" id="submitBtn"></button>
+      <p class="error" id="error" role="alert" hidden></p>
+      <button class="linkish" type="button" id="changeMind" hidden>Actually, I'm coming</button>
+      <p class="demo" id="demoNote" hidden>Preview mode: RSVPs aren't saved until the Google Sheet is connected.</p>
+    </form>
+
+    <div id="done" hidden>
+      <h2 id="doneTitle"></h2>
+      <p class="sub" id="doneText"></p>
+      <div class="cal-row" id="calDone"></div>
+      <button class="linkish" id="editBtn" type="button">Change my RSVP</button>
+    </div>
+  </section>
+
+
+</main>
+
+<dialog id="calSheet" aria-labelledby="calTitle">
+  <h2 id="calTitle">Add it to your calendar</h2>
+  <p class="sub">Friday, November 6 · doors at 7pm · The Holmead House</p>
+  <div class="cal-col" id="calSheetBtns"></div>
+  <button class="linkish" type="button" id="calLater">Maybe later</button>
+</dialog>
+
+
+<script>
+/* ============================================================
+   EVENT DETAILS
+   ============================================================ */
+const EVENT = {
+  title: "Out With The Lights · Diwali Party",
+  // DC is on Eastern Standard Time (-05:00) after Nov 1
+  start: "2026-11-06T19:00:00-05:00",
+  end:   "2026-11-07T00:00:00-05:00",
+  venue: "The Holmead House",
+  address: "Washington, DC",   // add the street address so maps and calendar invites point to the door
+  mapUrl: "",                  // optional: paste a Google Maps link to override
+  description: "Diwali party! Bring friends, drinks and stories. Desi snacks will be provided. Early birds get a saree drape. Doors at 7pm. RSVP:",
+  maxPlusOnes: 4,
+  // Paste your Google Apps Script web app URL here (see README). Empty = preview mode.
+  rsvpEndpoint: ""
+};
+/* ============================================================ */
+
+const $ = (id) => document.getElementById(id);
+const startD = new Date(EVENT.start), endD = new Date(EVENT.end);
+const pageUrl = location.href.split(/[?#]/)[0];
+const where = EVENT.venue + (EVENT.address ? ", " + EVENT.address : "");
+const details = EVENT.description + " " + pageUrl;
+
+if (!EVENT.rsvpEndpoint) $("demoNote").hidden = false;
+
+// ---------- calendar ----------
+const utc = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+const googleUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(EVENT.title) +
+  "&dates=" + utc(startD) + "/" + utc(endD) + "&details=" + encodeURIComponent(details) + "&location=" + encodeURIComponent(where);
+const outlookUrl = "https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=" +
+  encodeURIComponent(EVENT.title) + "&startdt=" + encodeURIComponent(startD.toISOString()) + "&enddt=" + encodeURIComponent(endD.toISOString()) +
+  "&body=" + encodeURIComponent(details) + "&location=" + encodeURIComponent(where);
+const icsEsc = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+function downloadIcs() {
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Out With The Lights//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
+    "UID:" + utc(startD) + "-outwiththelights@" + (location.hostname || "rsvp"), "DTSTAMP:" + utc(new Date()),
+    "DTSTART:" + utc(startD), "DTEND:" + utc(endD), "SUMMARY:" + icsEsc(EVENT.title), "DESCRIPTION:" + icsEsc(details),
+    "LOCATION:" + icsEsc(where), "URL:" + pageUrl,
+    "BEGIN:VALARM","TRIGGER:-PT3H","ACTION:DISPLAY","DESCRIPTION:" + icsEsc(EVENT.title),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+  a.download = "out-with-the-lights.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+// Put the most likely calendar first: Apple on iPhone/Mac, Google elsewhere
+const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+const calOptions = [["Google Calendar", googleUrl], ["Apple Calendar", null], ["Outlook", outlookUrl]];
+if (isApple) calOptions.unshift(calOptions.splice(1, 1)[0]);
+function calButtons(el, onPick) {
+  el.innerHTML = "";
+  calOptions.forEach(([label, href], i) => {
+    const a = document.createElement("a"); a.className = "btn" + (i === 0 ? " first" : ""); a.textContent = label;
+    if (href) { a.href = href; a.target = "_blank"; a.rel = "noopener"; }
+    else { a.href = "#"; a.addEventListener("click", (e) => { e.preventDefault(); downloadIcs(); }); }
+    if (onPick) a.addEventListener("click", onPick);
+    el.appendChild(a);
+  });
+}
+const sheet = $("calSheet");
+calButtons($("calDone"));
+calButtons($("calSheetBtns"), () => setTimeout(() => sheet.close(), 150));
+$("calLater").onclick = () => sheet.close();
+sheet.addEventListener("click", (e) => { if (e.target === sheet) sheet.close(); });
+
+
+// ---------- yes / no ----------
+let mode = null;
+function setMode(m, { quiet = false } = {}) {
+  mode = m;
+  const b = document.body;
+  b.classList.remove("mode-yes", "mode-no");
+  b.classList.add("mode-" + m);
+  $("yesBar").setAttribute("aria-pressed", m === "yes");
+  $("noBar").setAttribute("aria-pressed", m === "no");
+  const yes = m === "yes";
+  $("formTitle").textContent = yes ? "Yay! What's your name?" : "NOOOO";
+  $("formSub").textContent = yes ? "So I can add you to the list." : "The cats will be so sad";
+  $("submitBtn").textContent = yes ? "Count me in" : "Send my regrets";
+  $("yesOnly").hidden = !yes; $("noOnly").hidden = yes; $("changeMind").hidden = yes;
+  if (!quiet) showForm();
+}
+function showForm() {
+  const p = $("formPanel");
+  $("rsvpForm").hidden = false; $("done").hidden = true; $("error").hidden = true;
+  if (p.hidden) { p.hidden = false; p.classList.remove("enter"); void p.offsetWidth; p.classList.add("enter"); }
+  if (mode === "yes") setTimeout(() => $("name").focus({ preventScroll: true }), 350);
+}
+$("yesBar").onclick = () => setMode("yes");
+$("noBar").onclick = () => setMode("no");
+$("changeMind").onclick = () => setMode("yes");
+
+let plusOnes = 0;
+const setPlus = (n) => { plusOnes = Math.max(0, Math.min(EVENT.maxPlusOnes, n)); $("plusOnes").textContent = plusOnes; };
+$("minus").onclick = () => setPlus(plusOnes - 1);
+$("plus").onclick = () => setPlus(plusOnes + 1);
+
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("owtl-rsvp") || "null"); } catch { return null; } },
+  set(v) { try { localStorage.setItem("owtl-rsvp", JSON.stringify(v)); } catch {} }
+};
+
+function showDone(r) {
+  const p = $("formPanel"); p.hidden = false;
+  $("rsvpForm").hidden = true; $("done").hidden = false;
+  const first = r.name.split(" ")[0];
+  if (r.attending === "yes") {
+    $("doneTitle").textContent = "See you there, " + first + "!";
+    $("doneText").textContent = "Doors at 7. Early birds get a saree drape. Add it to your calendar:";
+    $("calDone").hidden = false;
+  } else {
+    $("doneTitle").textContent = "We'll miss you, " + first;
+    $("doneText").textContent = "If plans change, you know where to find us.";
+    $("calDone").hidden = true;
+  }
+}
+$("editBtn").onclick = () => {
+  const r = store.get();
+  if (r) { $("name").value = r.name; $("note").value = r.note || ""; setPlus(r.plusOnes || 0); }
+  showForm();
+};
+
+$("rsvpForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = $("error"); err.hidden = true;
+  const data = {
+    name: $("name").value.trim(),
+    email: "",
+    attending: mode,
+    plusOnes: mode === "yes" ? plusOnes : 0,
+    note: mode === "no" ? $("note").value.trim() : ""
+  };
+  if (!data.name) { err.textContent = "Please add your name."; err.hidden = false; $("name").focus(); return; }
+
+  const btn = $("submitBtn"), label = btn.textContent;
+  btn.disabled = true; btn.textContent = "Sending…";
+  try {
+    if (EVENT.rsvpEndpoint) {
+      // text/plain avoids a CORS preflight, which Apps Script doesn't support
+      const res = await fetch(EVENT.rsvpEndpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || "failed");
+    }
+    store.set(data);
+    showDone(data);
+    renderGuests(true);
+    if (data.attending === "yes") {
+      $("guestList").scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => sheet.showModal(), 700);   // pop up the calendar options
+    }
+    loadGuests();
+  } catch {
+    err.textContent = "Couldn't send your RSVP. Please try again in a moment."; err.hidden = false;
+  } finally {
+    btn.disabled = false; btn.textContent = label;
+  }
+});
+
+// ---------- who's coming (middle of the poster) ----------
+let remoteGuests = [];
+function renderGuests(highlightMe = false) {
+  const me = store.get();
+  const key = (n) => n.trim().toLowerCase();
+  let guests = remoteGuests.filter((g) => !me || key(g.name) !== key(me.name));
+  if (me && me.attending === "yes") guests = [...guests, { name: me.name, plusOnes: me.plusOnes, me: true }];
+
+  const list = $("guestList");
+  list.innerHTML = "";
+  if (!guests.length) { list.innerHTML = '<span class="empty">Be the first to say yes</span>'; return; }
+  guests.forEach((g) => {
+    const s = document.createElement("span");
+    s.className = "g" + (g.me ? " mine" : "") + (g.me && highlightMe ? " me" : "");
+    s.textContent = g.name;
+    if (g.plusOnes) { const sm = document.createElement("small"); sm.textContent = "+" + g.plusOnes; s.appendChild(sm); }
+    list.appendChild(s);
+  });
+}
+async function loadGuests() {
+  if (!EVENT.rsvpEndpoint) return;
+  try {
+    const { guests = [] } = await (await fetch(EVENT.rsvpEndpoint)).json();
+    remoteGuests = guests;
+    renderGuests();
+  } catch {}
+}
+
+// returning visitor
+const prior = store.get();
+if (prior) { setMode(prior.attending, { quiet: true }); $("name").value = prior.name; setPlus(prior.plusOnes || 0); showDone(prior); }
+renderGuests();
+loadGuests();
+</script>
+</body>
+</html>
